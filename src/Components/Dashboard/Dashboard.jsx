@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import uuidv1 from "uuid/v1";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./Dashboard.module.css";
 import Controls from "./../Controls/Controls";
 import Balance from "./../Balance/Balance";
@@ -28,10 +30,10 @@ class Dashboard extends Component {
   checkTransaction = (value, type) => {
     const { balance } = this.state;
     if (!value) {
-      console.log(MESSAGE.zero);
+      toast(MESSAGE.zero);
       return;
     } else if (type === TYPE.withdraw && value > balance) {
-      console.log(MESSAGE.noEnough);
+      toast(MESSAGE.noEnough);
       return;
     } else {
       this.saveTransaction(value, type);
@@ -59,7 +61,6 @@ class Dashboard extends Component {
       value = transactions
         .filter(transaction => transaction.type === TYPE[process])
         .reduce((acc, transaction) => acc + transaction.amount, 0);
-      console.log(value);
     }
     return value;
   };
@@ -75,7 +76,10 @@ class Dashboard extends Component {
             onWithdraw={this.handleWithdraw}
           />
           <Balance balance={balance} income={income} expenses={expenses} />
-          {transactions.length > 0 && <TransactionHistory items={transactions} />}
+          {transactions.length > 0 && (
+            <TransactionHistory items={transactions} />
+          )}
+          <ToastContainer />
         </div>
       </>
     );
