@@ -2,23 +2,26 @@ import React from "react";
 import T from "prop-types";
 import styles from "./Balance.module.css";
 
-const Balance = ({ balance, income, expenses }) => (
-  <section className={styles.balance}>
-    <span className={styles.income}>
-      <span role="img" aria-label="jsx-a11y/accessible-emoji">
-        ⬆️
+const Balance = ({income, expenses, balance}) => {
+  const fixedNumber = number => number.toFixed(2);
+    return (
+    <section className={styles.balance}>
+      <span className={styles.income}>
+        <span role="img" aria-label="jsx-a11y/accessible-emoji">
+          ⬆️
+        </span>
+        {fixedNumber(income)} $
       </span>
-      {income}$
-    </span>
-    <span className={styles.expenses}>
-      <span role="img" aria-label="jsx-a11y/accessible-emoji">
-        ⬇️
+      <span className={styles.expenses}>
+        <span role="img" aria-label="jsx-a11y/accessible-emoji">
+          ⬇️
+        </span>
+        {fixedNumber(expenses)} $
       </span>
-      {expenses}$
-    </span>
-    <span className={styles.balance__text}>Balance: {balance}$</span>
-  </section>
-);
+      <span className={styles.balance__text}>Balance: {fixedNumber(balance)} $</span>
+    </section>
+  );
+};
 
 Balance.propTypes = {
   balance: T.number.isRequired,

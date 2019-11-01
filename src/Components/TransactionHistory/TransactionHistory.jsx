@@ -17,7 +17,7 @@ const TransactionHistory = ({ items }) => (
         return (
           <tr className={styles.tableRow} key={id}>
             <td>{type}</td>
-            <td>{amount}</td>
+            <td>{amount.toFixed(2)} $</td>
             <td>{date}</td>
           </tr>
         );

@@ -22,14 +22,14 @@ class Dashboard extends Component {
   };
 
   handleDeposit = value => {
-    this.checkTransaction(+value, TYPE.deposit);
+    this.checkTransaction(value, TYPE.deposit);
   };
   handleWithdraw = value => {
-    this.checkTransaction(+value, TYPE.withdraw);
+    this.checkTransaction(value, TYPE.withdraw);
   };
   checkTransaction = (value, type) => {
     const { balance } = this.state;
-    if (!value) {
+    if (!value || value < 0) {
       toast(MESSAGE.zero);
       return;
     } else if (type === TYPE.withdraw && value > balance) {

@@ -15,21 +15,33 @@ class Controls extends Component {
   };
   sendTransaction = transaction => {
     const { value } = this.state;
-    if (value > 0) {
-      this.setState({ value: "" });
-    }
-    transaction(value);
+    transaction(+value);
+    this.setState({ value: "" });
   };
   render() {
     const { onDeposit, onWithdraw } = this.props;
-    const {value} = this.state
+    const { value } = this.state;
     return (
       <section className={styles.controls}>
-        <input className={styles.input} type="number" name="amount" value={value}  onChange={this.saveInputValue} />
-        <button className={styles.button} type="button" onClick={() => this.sendTransaction(onDeposit)}>
+        <input
+          className={styles.input}
+          type="number"
+          name="amount"
+          value={value}
+          onChange={this.saveInputValue}
+        />
+        <button
+          className={styles.button}
+          type="button"
+          onClick={() => this.sendTransaction(onDeposit)}
+        >
           Deposit
         </button>
-        <button className={styles.button} type="button" onClick={() => this.sendTransaction(onWithdraw)}>
+        <button
+          className={styles.button}
+          type="button"
+          onClick={() => this.sendTransaction(onWithdraw)}
+        >
           Withdraw
         </button>
       </section>
