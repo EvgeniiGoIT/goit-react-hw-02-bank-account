@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import T from "prop-types";
+import TYPE from "../../Constant/TYPE";
 import styles from "./Controls.module.css";
 
 class Controls extends Component {
@@ -11,11 +12,12 @@ class Controls extends Component {
     value: ""
   };
   saveInputValue = e => {
-    this.setState({ value: e.currentTarget.value });
+    const value = e.currentTarget.value;
+    this.setState({ value });
   };
-  sendTransaction = transaction => {
+  sendTransaction = (transaction, type) => {
     const { value } = this.state;
-    transaction(+value);
+    transaction(+value, type);
     this.setState({ value: "" });
   };
   render() {
@@ -33,14 +35,14 @@ class Controls extends Component {
         <button
           className={styles.button}
           type="button"
-          onClick={() => this.sendTransaction(onDeposit)}
+          onClick={() => this.sendTransaction(onDeposit, TYPE.deposit)}
         >
           Deposit
         </button>
         <button
           className={styles.button}
           type="button"
-          onClick={() => this.sendTransaction(onWithdraw)}
+          onClick={() => this.sendTransaction(onWithdraw, TYPE.withdraw)}
         >
           Withdraw
         </button>

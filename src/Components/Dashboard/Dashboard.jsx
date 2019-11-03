@@ -2,42 +2,33 @@ import React, { Component } from "react";
 import uuidv1 from "uuid/v1";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TYPE from "../../Constant/TYPE";
+import MESSAGE from "../../Constant/MESSAGE";
 import styles from "./Dashboard.module.css";
 import Controls from "./../Controls/Controls";
 import Balance from "./../Balance/Balance";
 import TransactionHistory from "./../TransactionHistory/TransactionHistory";
 
-const TYPE = {
-  deposit: "deposit",
-  withdraw: "withdraw"
-};
-const MESSAGE = {
-  zero: "Введите сумму для проведения операции!",
-  noEnough: "На счету недостаточно средств для проведения операции!"
-};
 class Dashboard extends Component {
   state = {
     transactions: [],
     balance: 0
   };
 
-  handleDeposit = value => {
-    this.checkTransaction(value, TYPE.deposit);
-  };
-  handleWithdraw = value => {
-    this.checkTransaction(value, TYPE.withdraw);
+  handleTransaction = (value, type) => {
+    this.checkTransaction(value, type);
   };
   checkTransaction = (value, type) => {
     const { balance } = this.state;
     if (!value || value < 0) {
       toast(MESSAGE.zero);
       return;
-    } else if (type === TYPE.withdraw && value > balance) {
+    }
+    if (type === TYPE.withdraw && value > balance) {
       toast(MESSAGE.noEnough);
       return;
-    } else {
-      this.saveTransaction(value, type);
     }
+    this.saveTransaction(value, type);
   };
   saveTransaction = (value, type) => {
     const newTransaction = this.setTransaction(value, type);
@@ -55,14 +46,12 @@ class Dashboard extends Component {
     amount,
     date: new Date().toLocaleString()
   });
-  incomeExpenses = (transactions, process) => {
-    let value = 0;
-    if (transactions.length) {
-      value = transactions
-        .filter(transaction => transaction.type === TYPE[process])
-        .reduce((acc, transaction) => acc + transaction.amount, 0);
-    }
-    return value;
+  incomeExpenses = (transactions, type) => {
+    return transactions.length
+      ? transactions
+          .filter(transaction => transaction.type === TYPE[type])
+          .reduce((acc, transaction) => acc + transaction.amount, 0)
+      : 0;
   };
   render() {
     const { transactions, balance } = this.state;
@@ -72,8 +61,8 @@ class Dashboard extends Component {
       <>
         <div className={styles.dashboard}>
           <Controls
-            onDeposit={this.handleDeposit}
-            onWithdraw={this.handleWithdraw}
+            onDeposit={this.handleTransaction}
+            onWithdraw={this.handleTransaction}
           />
           <Balance balance={balance} income={income} expenses={expenses} />
           {transactions.length > 0 && (
