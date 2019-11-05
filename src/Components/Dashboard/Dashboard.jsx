@@ -61,8 +61,7 @@ class Dashboard extends Component {
       <>
         <div className={styles.dashboard}>
           <Controls
-            onDeposit={this.handleTransaction}
-            onWithdraw={this.handleTransaction}
+            onTransaction={this.handleTransaction}
           />
           <Balance balance={balance} income={income} expenses={expenses} />
           {transactions.length > 0 && (

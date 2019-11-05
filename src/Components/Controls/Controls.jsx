@@ -5,8 +5,7 @@ import styles from "./Controls.module.css";
 
 class Controls extends Component {
   static propTypes = {
-    onDeposit: T.func.isRequired,
-    onWithdraw: T.func.isRequired
+    onTransaction: T.func.isRequired
   };
   state = {
     value: ""
@@ -21,7 +20,7 @@ class Controls extends Component {
     this.setState({ value: "" });
   };
   render() {
-    const { onDeposit, onWithdraw } = this.props;
+    const { onTransaction } = this.props;
     const { value } = this.state;
     return (
       <section className={styles.controls}>
@@ -35,14 +34,14 @@ class Controls extends Component {
         <button
           className={styles.button}
           type="button"
-          onClick={() => this.sendTransaction(onDeposit, TYPE.deposit)}
+          onClick={() => this.sendTransaction(onTransaction, TYPE.deposit)}
         >
           Deposit
         </button>
         <button
           className={styles.button}
           type="button"
-          onClick={() => this.sendTransaction(onWithdraw, TYPE.withdraw)}
+          onClick={() => this.sendTransaction(onTransaction, TYPE.withdraw)}
         >
           Withdraw
         </button>
